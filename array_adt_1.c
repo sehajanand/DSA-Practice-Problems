@@ -7,7 +7,15 @@ struct myArray{
     int usedSize;
     int *p;
 };
+// struct myArray * createArray(int tSize){
+//     struct myArray *ptr;
+//     ptr=(struct myArray *)malloc(sizeof(struct myArray));
+//     ptr->total_size=tSize;
+//     ptr->p=(int *)malloc(tSize*sizeof(int));
+//     return ptr;
+// ;};
 void createArray(struct myArray *ptr,int tSize){
+//     ptr=(struct myArray *)malloc(sizeof(struct myArray));
     ptr->totalSize=tSize;
     ptr->p=(int *)malloc(tSize*sizeof(int));
 ;};
@@ -24,9 +32,13 @@ void displayArray(struct myArray *ptr){
     };
 ;};
 int main(){
-    struct myArray a;
-    createArray(&a,10);
-    setElements(&a,5);
-    displayArray(&a);
+    // struct myArray a;
+    // createArray(&a,10);
+    // setElements(&a,5);
+    // displayArray(&a);
+    struct myArray *a;
+    createArray(a,10);
+    setElements(a,5);
+    displayArray(a);
     return 0;
 }

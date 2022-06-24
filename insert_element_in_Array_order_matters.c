@@ -26,49 +26,52 @@
 //     printf("%d",a[4]);
 //     return 0;
 // }
-# include<stdio.h>
+# include <stdio.h>
 # include<stdlib.h>
-
-struct myArray{
-    int t_size;
-    int u_size;
-    int *ptr;
+struct myIntArray{
+    int total_size;
+    int used_size;
+    int *p;
 };
+//order matters
 
-void createArray(struct myArray *ptr,int tSize){
-    ptr->t_size=tSize;
-    ptr->ptr=(int *)malloc(tSize*sizeof(int));
-};
-
-void setVal(struct myArray *ptr, int uSize){
-    ptr->u_size=uSize;
-    for(int i=0;i<uSize;i++){
-        printf("Enter value of element indexed %d of array\n",i);
-        scanf("%d",&(ptr->ptr[i]));
-    }
+void insert(struct myIntArray *ptr, int el, int ind){
+    for (int i=ptr->used_size-1;i>=ind;i--){
+        ptr->p[i+1]=ptr->p[i];
+    };
+    ptr->p[ind]=el;
+    ++ptr->used_size;
 ;};
 
-void display(struct myArray *ptr){
-    for(int i=0;i<ptr->u_size;i++){
-        printf("%d ",ptr->ptr[i]);
-    }
+
+struct myIntArray * createArray(int tSize){
+    struct myIntArray *ptr;
+    ptr=(struct myIntArray *)malloc(sizeof(struct myIntArray));
+    ptr->total_size=tSize;
+    ptr->p=(int *)malloc(tSize*sizeof(int));
+    return ptr;
+;};
+
+void setVal(struct myIntArray *ptr,int uSize){
+    ptr->used_size=uSize;
+    for(int i=0;i<uSize;i++){
+        printf("Enter value of element indexed %d of array\n",i);
+        scanf("%d",&(ptr->p[i]));
+    };
+;};
+
+void displayArray(struct myIntArray *ptr){
+    for(int i=0;i<ptr->used_size;i++){
+        printf("%d ",ptr->p[i]);
+    };
     printf("\n");
 ;};
 
-void insert(struct myArray *ptr, int ind, int el){
-    for(int i=ptr->u_size-1;i>=ind;i--){
-        ptr->ptr[i+1]=ptr->ptr[i];
-    };
-    ptr->ptr[ind]=el;
-    ptr->u_size=ptr->u_size+1;
-;};
-
 int main(){
-    struct myArray arr;
-    createArray(&arr, 100);
-    setVal(&arr, 7);
-    display(&arr);
-    insert(&arr, 3, 9999);
-    display(&arr);
+    struct myIntArray *a=createArray(10);
+    setVal(a,5);
+    displayArray(a);
+    insert(a,8,5);
+    displayArray(a);
     return 0;
 }
