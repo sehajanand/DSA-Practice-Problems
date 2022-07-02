@@ -70,22 +70,25 @@ struct node *deleteAtStart(struct node *head)
     ;
 };
 
-void deleteInBetween(struct node *head,int ind){
-    int i=0;
-    while(i!=ind-1){
-        head=head->next;
+void deleteInBetween(struct node *head, int ind)
+{
+    int i = 0;
+    while (i != ind - 1)
+    {
+        head = head->next;
         i++;
     };
     struct node *p;
-    p=head->next;
-    head->next=p->next;
+    p = head->next;
+    head->next = p->next;
     free(p);
 };
 
-void deleteAfterNode(struct node *ptr){
+void deleteAfterNode(struct node *ptr)
+{
     struct node *p;
-    p=ptr->next;
-    ptr->next=p->next;
+    p = ptr->next;
+    ptr->next = p->next;
     free(p);
 };
 
@@ -114,7 +117,7 @@ int main()
     // display(head);
     // struct node *a = insertInBetween(head, 4, 100);
     // display(head);s
-    head=insertAtStart(head,99);
+    head = insertAtStart(head, 99);
     display(head);
     // struct node *c = insertAferNode(second, 999);
     // display(head);
