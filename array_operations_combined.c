@@ -1,123 +1,126 @@
+// ARRAY OPERATIONS  USING  ARRAY ADT:-
+
 # include<stdio.h>
 # include<stdlib.h>
 
 struct myArray{
-    int  totalSize;
-    int  usedSize;
+    int totalSize;
+    int usedSize;
     int *ptr;
 };
 
 struct myArray* createArray(int tSize){
-    struct myArray *p;
-    p=(struct myArray *)malloc(sizeof(struct myArray));
-    p->totalSize=tSize;
-    p->ptr=(int *)malloc(tSize*sizeof(int));
-    return p;
-};
+    struct myArray *ptr;
+    ptr=(struct myArray *)malloc(sizeof(struct myArray));
+    ptr->totalSize=tSize;
+    ptr->ptr=(int *)malloc(tSize*sizeof(int));
+;};
 
-void setVal(struct myArray *p,int uSize){
-    p->usedSize=uSize;
-    for(int i=0;i<uSize;i++){
-        printf("Enter value of element indexed %d of array\n",i);
-        scanf("%d",&(p->ptr[i]));
+void setElements(struct myArray *ptr,int uSize){
+    ptr->usedSize=uSize;
+    for(int i=0;i<ptr->usedSize;i++){
+        printf("Enter value of element indexed %d of array.\n",i);
+        scanf("%d",&(ptr->ptr[i]));
     };
 ;};
 
-void insertOrderMatters(struct myArray *p,int ind, int el){
-    if(p->usedSize==p->totalSize){
-        printf("Array overflow\n");
+void displayArray(struct myArray *ptr){
+    printf("{");
+    for(int i=0;i<ptr->usedSize;i++){
+        printf("%d,",ptr->ptr[i]);
+    }
+    printf("}\n");
+;};
+
+void insertElementInSortedArray(struct myArray *ptr,int index, int el){
+    if(ptr->usedSize==ptr->totalSize){
+        printf("Array Overflow!\n");
     }else{
-    for(int i=p->usedSize-1;i>=ind;i--){
-        p->ptr[i+1]=p->ptr[i];
-    };
-    p->ptr[ind]=el;
-    ++p->usedSize;
+        for(int i=ptr->usedSize;i>index;i--){
+            ptr->ptr[i]=ptr->ptr[i-1];
+        };
+        ++ptr->usedSize;
+        ptr->ptr[index]=el;
     };
 ;};
 
-void insertNoOrder(struct myArray *p,int ind, int el){
-    if(p->usedSize==p->totalSize){
-        printf("Array overflow!\n");
+
+void insertElementInUnsortedArray(struct myArray *ptr,int index,int el){
+    if(ptr->usedSize==ptr->totalSize){
+        printf("Array Overflow!\n");
     }else{
-    p->ptr[p->usedSize]=p->ptr[ind];
-    p->ptr[ind]=el;
-    ++p->usedSize;
-   };
+        ptr->ptr[ptr->usedSize]=ptr->ptr[index];
+        ptr->ptr[index]=el;
+        ++ptr->usedSize;
+    };
 ;};
 
-void deleteNoOrder(struct myArray *p,int ind){
-    if(p->usedSize<=0){
-        printf("Array underflow!\n");
+void deleteElementInSortedArray(struct myArray *ptr,int index){
+    if(ptr->usedSize==0){
+        printf("Array Underflow!\n");
     }else{
-    p->ptr[ind]=p->ptr[p->usedSize-1];
-    --p->usedSize;
+        for(int i=index;i<ptr->usedSize-1;i++){
+            ptr->ptr[i]=ptr->ptr[i+1];
+        };   
+        --ptr->usedSize;
     };
 ;};
 
-void deleteOrder(struct myArray *p, int ind){
-    if(p->usedSize<=0){
-        printf("Array underflow!\n");
+void deleteElementInUnsortedArray(struct myArray *ptr,int index){
+    if(ptr->usedSize==0){
+        printf("Array Underflow!\n");
     }else{
-    for(int i=ind;i<p->usedSize;i++){
-        p->ptr[i]=p->ptr[i+1];
+        ptr->ptr[index]=ptr->ptr[ptr->usedSize-1];
     };
-    --p->usedSize;
- }
+    --ptr->usedSize;
 ;};
 
-void display(struct myArray *p){
-    for(int i=0;i<p->usedSize;i++){
-        printf("%d ",p->ptr[i]);
+int linearSearch(struct myArray *ptr,int el){
+    for(int i=0;i<ptr->usedSize;i++){
+        if(ptr->ptr[i]==el){
+            return i;
+        };
     };
-    printf("\n");
-;};
-
-int linearSearch(struct myArray *p,int el){
-    int i=0;
-    while(i<p->usedSize){
-        if(p->ptr[i]==el){
-            printf("Element found at index %d\n",i);
-            return 0;   
-        }else{
-            i++;
-        }
-    };
-    printf("Element not found\n");
     return -1;
 ;};
 
-int binarySearch(struct myArray *p,int el){
-    int low, mid, high;
-    low=0;
-    high=p->usedSize-1;
+int binarySearch(struct myArray *ptr, int el){
+    int low=0,mid,high=ptr->usedSize-1;
     while(low<=high){
         mid=(low+high)/2;
-        if(p->ptr[mid]==el){
-            printf("Element found at index %d\n",mid);
-            return 0;
+        if(ptr->ptr[mid]==el){
+            return mid;
         }
-        else if(p->ptr[mid]<el){
+        if(ptr->ptr[mid]<el){
             low=mid+1;
         }
         else{
             high=mid-1;
-        }
+        };
     }
-    printf("Element not found\n");
-    return -1;
+        return -1;
 ;};
 
 int main(){
-    struct myArray *a=createArray(10);
-    setVal(a,5);
-    display(a);
-    // insertOrderMatters(a,2,100);
-    // display(a);
-    // insertNoOrder(a,2,100);
-    // deleteOrder(a,2);
-    // deleteNoOrder(a,2);
-    // linearSearch(a,3);
-    binarySearch(a,3);
-    display(a);
+    struct myArray *sortedArray=createArray(10);
+    setElements(sortedArray,5);
+    displayArray(sortedArray);
+    insertElementInSortedArray(sortedArray,1,99);
+    displayArray(sortedArray);
+    deleteElementInSortedArray(sortedArray,1);
+    displayArray(sortedArray);
+    int elementIndexInSortedArray=linearSearch(sortedArray,2);
+    printf("%d\n",elementIndexInSortedArray);
+    elementIndexInSortedArray=binarySearch(sortedArray,3);
+    printf("%d\n",elementIndexInSortedArray);
+    struct myArray *unsortedArray=createArray(10);
+    setElements(unsortedArray,5); // 1 4 2 8 6 
+    displayArray(unsortedArray);
+    insertElementInUnsortedArray(unsortedArray,1,99);
+    displayArray(unsortedArray);
+    deleteElementInUnsortedArray(unsortedArray,1);
+    displayArray(unsortedArray);
+    int elementIndexInUnsortedArray=linearSearch(unsortedArray,4);
+    printf("%d\n",elementIndexInUnsortedArray);
     return 0;
 }
