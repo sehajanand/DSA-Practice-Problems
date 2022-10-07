@@ -1,18 +1,52 @@
 # include<stdio.h>
+# include<stdlib.h>
 
-union a{
-    int b;
-    char c;
-    float d;
+struct node{
+    int data;
+    struct node *next;
 };
 
+void listDisplay(struct node *ptr){
+    printf("{");
+    while(ptr!=NULL){
+        printf("%d,",ptr->data);
+        ptr=ptr->next;
+    };
+    printf("}\n");
+;};
+
+
+struct node* insertAtEnd(struct node *ptr,int data){
+    struct node *newLastNode;
+    newLastNode=(struct node *)malloc(sizeof (struct node));
+    newLastNode->data=data;
+    newLastNode->next=NULL;
+    while(ptr->next!=NULL){
+        ptr=ptr->next;
+    };
+    ptr->next=newLastNode;
+    return newLastNode;
+;};
+
 int main(){
-    union a z;
-    z.b=1;
-    z.c='x';
-    z.d=1.2;
-    printf("%d\n",z.b);
-    printf("%c\n",z.c);
-    printf("%f\n",z.d);
+    struct node *head;
+    head=(struct node *)malloc(sizeof(struct node));
+    struct node *second;
+    second=(struct node *)malloc(sizeof(struct node));
+    struct node *third;
+    third=(struct node *)malloc(sizeof(struct node));
+    struct node *fourth;
+    fourth=(struct node *)malloc(sizeof(struct node));
+    head->data=1;
+    head->next=second;
+    second->data=2;
+    second->next=third;
+    third->data=3;
+    third->next=fourth;
+    fourth->data=4;
+    fourth->next=NULL;
+    listDisplay(head);
+    struct node *newLastNode=insertAtEnd(head,99);
+    listDisplay(head);
     return 0;
 }
