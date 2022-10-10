@@ -15,13 +15,8 @@ void displayList(struct node *ptr){
     printf("}\n");
 ;};
 
-void deleteNodeInBetween(struct node *ptr,int index){
-    for(int i=0;i<index-2;i++){
-        ptr=ptr->next;
-    };
-    struct node *nodeToBeDeleted=ptr->next;
-    ptr->next=(ptr->next)->next;
-    free(nodeToBeDeleted);
+void deleteFirstNode(struct node *head){
+    free(head);
 ;};
 
 int main(){
@@ -42,7 +37,7 @@ int main(){
     fourth->data=4;
     fourth->next=NULL;
     displayList(head);
-    deleteNodeInBetween(head,3);
-    displayList(head);
+    deleteFirstNode(head);
+    displayList(second);
     return 0;
 }

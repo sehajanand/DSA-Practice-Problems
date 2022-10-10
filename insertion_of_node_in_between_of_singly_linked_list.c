@@ -3,7 +3,7 @@
 
 struct node{
     int data;
-    struct node *next;
+    struct node* next;   
 };
 
 void displayList(struct node *ptr){
@@ -15,13 +15,16 @@ void displayList(struct node *ptr){
     printf("}\n");
 ;};
 
-void deleteNodeInBetween(struct node *ptr,int index){
+struct node* insertInBetween(struct node *ptr,int data,int index){
+    struct node *newNode;
+    newNode=(struct node *)malloc(sizeof(struct node));
     for(int i=0;i<index-2;i++){
         ptr=ptr->next;
     };
-    struct node *nodeToBeDeleted=ptr->next;
-    ptr->next=(ptr->next)->next;
-    free(nodeToBeDeleted);
+    newNode->data=data;
+    newNode->next=ptr->next;
+    ptr->next=newNode;
+    return newNode;
 ;};
 
 int main(){
@@ -42,7 +45,7 @@ int main(){
     fourth->data=4;
     fourth->next=NULL;
     displayList(head);
-    deleteNodeInBetween(head,3);
+    struct node *newNode=insertInBetween(head,99,4);
     displayList(head);
     return 0;
 }

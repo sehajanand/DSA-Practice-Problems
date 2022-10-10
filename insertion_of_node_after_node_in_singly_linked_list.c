@@ -15,17 +15,17 @@ void displayList(struct node *ptr){
     printf("}\n");
 ;};
 
-void deleteNodeInBetween(struct node *ptr,int index){
-    for(int i=0;i<index-2;i++){
-        ptr=ptr->next;
-    };
-    struct node *nodeToBeDeleted=ptr->next;
-    ptr->next=(ptr->next)->next;
-    free(nodeToBeDeleted);
+struct node* insertAfterNode(struct node *ptr,int data){
+    struct node *newNode;
+    newNode=(struct node *)malloc(sizeof(struct node));
+    newNode->data=data;
+    newNode->next=ptr->next;
+    ptr->next=newNode;
+    return newNode;
 ;};
 
 int main(){
-     struct node *head;
+    struct node *head;
     head=(struct node *)malloc(sizeof(struct node));
     struct node *second;
     second=(struct node *)malloc(sizeof(struct node));
@@ -42,7 +42,8 @@ int main(){
     fourth->data=4;
     fourth->next=NULL;
     displayList(head);
-    deleteNodeInBetween(head,3);
+    struct node *ptr=second;
+    struct node *newNode=insertAfterNode(ptr,99);
     displayList(head);
-    return 0;
+    return 0;   
 }
